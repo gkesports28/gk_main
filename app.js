@@ -7,7 +7,7 @@ const CashFreePaymentRoute = require("./routes/cahfreePaymentRoutes");
 const CashFreePayoutRoute = require("./routes/cashfreePayoutRoutes");
 // const path = require('path');
 const { sendGlobalNotification } = require("./config/fcmConfig");
-require("./scheduler/tournament");
+// require("./scheduler/tournament");
 const app = express();
 const corsOptions = {
   "Access-Control-Allow-Origin": [
