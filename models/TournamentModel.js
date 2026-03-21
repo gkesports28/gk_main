@@ -22,29 +22,36 @@ const matchSchema = new mongoose.Schema(
     mapId: { type: mongoose.Schema.Types.ObjectId, required: true },
     prizeDetail: [
       {
-        minPosition: { type: Number }, 
+        minPosition: { type: Number },
         maxPosition: { type: Number },
         prize: { type: Number },
       },
     ],
-    participants: [{
+    participants: [
+      {
         userId: { type: mongoose.Schema.Types.ObjectId, required: true },
-        gameUserId:{type: Number, required: true},
-        gameLevel:{type: Number, required: true},
-        gameUserName:{type: String, required: true},
-        mapDownload:{type:Boolean},
+        gameUserId: { type: Number, required: true },
+        gameLevel: { type: Number, required: true },
+        gameUserName: { type: String, required: true },
+        mapDownload: { type: Boolean },
         joinedAt: { type: Date, default: Date.now },
-    }],
-    winners: [{
-        participantId: { type: mongoose.Schema.Types.ObjectId, ref: 'participants', required: true },
+      },
+    ],
+    winners: [
+      {
+        participantId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "participants",
+          required: true,
+        },
         position: { type: Number, required: true },
         prize: { type: Number, required: true },
-        kills: { type: Number, default: 0 }
-    }],
-    fundsDistributed: { type: Boolean, default: false }
-  
+        kills: { type: Number, default: 0 },
+      },
+    ],
+    fundsDistributed: { type: Boolean, default: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const TournamentModel = mongoose.model("Tournament", matchSchema);

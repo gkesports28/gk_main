@@ -26,14 +26,31 @@ exports.addTournament = async (req, res) => {
   }
 
   try {
+    // const objData = {  // old cde
+    //   type: data.type,
+    //   title: data.title,
+    //   entryFee: data.entryFee,
+    //   prizes: data.killPoint * (totalPlayers - 1),
+    //   killPoint: data.killPoint,
+    //   startTime: convertISTTOUTC(data.startTime),
+    //   endTime: convertISTTOUTC(data.endTime),
+    //   totalParticipants: data.totalParticipants,
+    //   map: data.map,
+    //   filled: data.filled,
+    //   totalPlayer: data.totalPlayer,
+    //   startDate: data.startDate,
+    //   mapId: data.mapId,
+    //   prizeDetail: data.prizeDetail,
+    // };
     const objData = {
+      // new code
       type: data.type,
       title: data.title,
       entryFee: data.entryFee,
       prizes: data.killPoint * (totalPlayers - 1),
       killPoint: data.killPoint,
-      startTime: convertISTTOUTC(data.startTime),
-      endTime: convertISTTOUTC(data.endTime),
+      startTime: new Date(data.startTime),
+      endTime: new Date(data.endTime),
       totalParticipants: data.totalParticipants,
       map: data.map,
       filled: data.filled,
@@ -245,7 +262,8 @@ exports.updateTournament = async (req, res) => {
       endTime,
       killPoint: data.killPoint,
       prizes: prizePool + data.killPoint * (totalPlayers - 1),
-      status: tournamentStatus,
+      // status: tournamentStatus,  //old
+      status: data.status || "upcoming", // new
     };
 
     const findTournament = await TournamentModel.findOneAndUpdate(
