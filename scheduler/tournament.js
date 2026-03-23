@@ -5,7 +5,10 @@ const { convertISTTOUTC } = require("../utils/timeUtil");
 cron.schedule(
   "* * * * *", // Runs every minute
   async () => {
-    console.log("Scheduler Running Every Minute for Tournament Status Update", new Date().getSeconds());
+    console.log(
+      "Scheduler Running Every Minute for Tournament Status Update",
+      new Date().getSeconds(),
+    );
 
     try {
       // Get the current time in UTC
@@ -15,7 +18,7 @@ cron.schedule(
       // Fetch tournaments that are either "live", "upcoming", or "past"
       const tournaments = await TournamentModel.find(
         { status: { $in: ["past", "live", "upcoming"] } },
-        { startTime: 1, endTime: 1, status: 1 } // Select only required fields
+        { startTime: 1, endTime: 1, status: 1 }, // Select only required fields
       );
 
       for (const tournament of tournaments) {
@@ -27,18 +30,30 @@ cron.schedule(
         // Check if the tournament's status should be updated
         if (startTime > currentDate) {
           if (tournament.status !== "upcoming") {
-            await TournamentModel.findByIdAndUpdate(tournament._id, { status: "upcoming" });
-            console.log(`Tournament ${tournament._id} status updated to "upcoming"`);
+            await TournamentModel.findByIdAndUpdate(tournament._id, {
+              status: "upcoming",
+            });
+            console.log(
+              `Tournament ${tournament._id} status updated to "upcoming"`,
+            );
           }
         } else if (startTime <= currentDate && currentDate <= endTime) {
           if (tournament.status !== "live") {
-            await TournamentModel.findByIdAndUpdate(tournament._id, { status: "live" });
-            console.log(`Tournament ${tournament._id} status updated to "live"`);
+            await TournamentModel.findByIdAndUpdate(tournament._id, {
+              status: "live",
+            });
+            console.log(
+              `Tournament ${tournament._id} status updated to "live"`,
+            );
           }
         } else if (endTime < currentDate) {
           if (tournament.status !== "past") {
-            await TournamentModel.findByIdAndUpdate(tournament._id, { status: "past" });
-            console.log(`Tournament ${tournament._id} status updated to "past"`);
+            await TournamentModel.findByIdAndUpdate(tournament._id, {
+              status: "past",
+            });
+            console.log(
+              `Tournament ${tournament._id} status updated to "past"`,
+            );
           }
         } else {
           console.log("No updates needed for tournament:", tournament._id);
@@ -48,19 +63,8 @@ cron.schedule(
       console.error("Error in scheduler:", error);
     }
   },
-  { scheduled: true, timezone: "Asia/Kolkata" }
+  { scheduled: true, timezone: "Asia/Kolkata" },
 );
-
-
-
-
-
-
-
-
-
-
-
 
 // const cron = require("node-cron");
 // const TournamentModel = require("../models/TournamentModel");
@@ -91,11 +95,11 @@ cron.schedule(
 //         if (startTime>currentDate) {
 //           // console.log("Tournament is upcoming:", tournament._id);
 //           await TournamentModel.findByIdAndUpdate(tournament._id, { status: "upcoming" });
-//         } 
+//         }
 //         else if ( startTime <= currentDate && currentDate <= endTime) {
 //           // console.log("Tournament is live:", tournament._id);
 //           await TournamentModel.findByIdAndUpdate(tournament._id, { status: "live" });
-//         } 
+//         }
 //         else if (endTime < currentDate) {
 //           // console.log("Tournament is past:", tournament._id);
 //           if(tournament.status !== "past") {

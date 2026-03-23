@@ -685,8 +685,8 @@ exports.updateTournament = async (req, res) => {
       endTime,
       killPoint: data.killPoint,
       prizes: prizePool + data.killPoint * (totalPlayers - 1),
-      // status: tournamentStatus,  //old
-      status: data.status || "upcoming", // new
+      status: tournamentStatus, //old
+      // status: data.status || "upcoming", // new
     };
 
     const findTournament = await TournamentModel.findOneAndUpdate(
