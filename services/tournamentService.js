@@ -2,8 +2,8 @@ const { convertISTTOUTC } = require("../utils/timeUtil");
 const moment = require("moment");
 
 exports.getTournamentStatus = (startTime, endTime) => {
-  // const currentDate = moment.utc().toDate(); old code
-  const currentDate = new Date(); // new code
+  const currentDate = moment.utc().toDate(); //old code
+  // const currentDate = new Date(); // new code
   if (startTime > currentDate) {
     return "upcoming";
   } else if (startTime <= currentDate && currentDate <= endTime) {
