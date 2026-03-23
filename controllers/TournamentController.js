@@ -678,7 +678,7 @@ exports.updateTournament = async (req, res) => {
     let endTime = convertISTTOUTC(data.endTime);
 
     const tournamentStatus = getTournamentStatus(startTime, endTime);
-
+    console.log({ tournamentId, tournamentStatus });
     const objData = {
       title: data.title,
       startTime,
@@ -793,7 +793,7 @@ exports.updateTournamentBasicDetails = async (req, res) => {
       { status },
       { new: true },
     );
-    console.log("updayeData", updatedTournament);
+    // console.log("updayeData", updatedTournament);
     if (!updatedTournament) {
       return res.status(400).json({
         status: "fail",
