@@ -677,16 +677,16 @@ exports.updateTournament = async (req, res) => {
     let startTime = convertISTTOUTC(data.startTime);
     let endTime = convertISTTOUTC(data.endTime);
 
-    const tournamentStatus = getTournamentStatus(startTime, endTime);
-    console.log({ tournamentId, tournamentStatus });
+    // const tournamentStatus = getTournamentStatus(startTime, endTime);
+    // console.log({ tournamentId, tournamentStatus });
     const objData = {
       title: data.title,
       startTime,
       endTime,
       killPoint: data.killPoint,
       prizes: prizePool + data.killPoint * (totalPlayers - 1),
-      status: tournamentStatus, //old
-      // status: data.status || "upcoming", // new
+      // status: tournamentStatus, //old
+      status: data.status || "upcoming", // new
     };
 
     const findTournament = await TournamentModel.findOneAndUpdate(
